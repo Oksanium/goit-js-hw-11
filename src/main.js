@@ -17,7 +17,6 @@ const modalOptions = {
     captionDelay: 250,
 };
 const lightbox = new SimpleLightbox('.gallery a', modalOptions);
-console.log(lightbox);
 
 const loader = document.querySelector('.loader-wrapper');
 const form = document.querySelector('.form');
@@ -31,6 +30,7 @@ function onSubmit(evt) {
   fetch(getURL(userQuery))
         .then(res => { return res.json(); })
         .then( data => { render(data.hits); })
+        .then( () => { lightbox.refresh(); } )
         .catch( e => { showRedToast(); } )
         .finally( () => { loader.setAttribute('style', 'display: none;'); } );
 }
