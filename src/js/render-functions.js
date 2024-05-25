@@ -1,17 +1,14 @@
 
 'use strict';
 
-const gallery = document.querySelector('.gallery');
 
 export function render(picsArr) {
   if (picsArr.length === 0) {
-    showRedToast();
-    return;
+    throw new Error('');
   }
-  gallery.innerHTML = picsArr.map(makePic).join('');
-
+  return picsArr.map(makePic).join(''); 
+   
   function makePic(obj) {
-    console.log(obj.tags);
     return `<li class="card">
                 <a href="${obj.largeImageURL}">
                 <div class="img-wrapper">
@@ -34,5 +31,4 @@ export function render(picsArr) {
             </table>
         </li>`;
   }
-  
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-import { getURL } from './js/pixabay-api';
+import { getPhotos } from './js/pixabay-api';
 import { render } from './js/render-functions';
 
 import SimpleLightbox from 'simplelightbox';
@@ -18,20 +18,22 @@ const modalOptions = {
 };
 const lightbox = new SimpleLightbox('.gallery a', modalOptions);
 
+const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader-wrapper');
 const form = document.querySelector('.form');
 form.addEventListener('submit', onSubmit);
 
 function onSubmit(evt) {
   evt.preventDefault();
-  loader.setAttribute('style', 'display: flex;');
+  gallery.innerHTML = '';
+  
   const userQuery = form.querySelector('input').value;
   if (userQuery === '') return;
-  fetch(getURL(userQuery))
-        .then(res => { return res.json(); })
-        .then( data => { render(data.hits); })
-        .then( () => { lightbox.refresh(); } )
-        .catch( e => { showRedToast(); } )
+  loader.setAttribute('style', 'display: flex;');
+  getPhotos(userQuery)
+        .then( res => res.json() )
+        .then( data => { gallery.innerHTML = render(data.hits); lightbox.refresh(); } )
+        .catch( e =>  showRedToast() )
         .finally( () => { loader.setAttribute('style', 'display: none;'); } );
 }
 
