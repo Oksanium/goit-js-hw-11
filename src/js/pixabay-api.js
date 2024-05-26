@@ -12,10 +12,8 @@ export function getPhotos(q) {
   const URL = BASE_URL + params;
   return fetch(URL).then(res => {
     if (!res.ok) {
-      console.log('!res.ok');
       throw new Error(res.status);
     }
     return res;
   });
-  //   .then(res => { return res.json(); });
 }

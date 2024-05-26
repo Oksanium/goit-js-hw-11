@@ -71,9 +71,3 @@ function showRedToast() {
   });
 }
 
-// toast test
-
-// function onSubmitTest(event) {
-//     event.preventDefault();
-//     showRedToast();
-// }
