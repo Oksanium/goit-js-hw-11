@@ -1,18 +1,13 @@
-
 'use strict';
 
-
 export function render(picsArr) {
-  if (picsArr.length === 0) {
-    throw new Error('');
-  }
-  return picsArr.map(makePic).join(''); 
-   
-  function makePic(obj) {
+  return picsArr.map(makePic).join('');
+
+  function makePic(picObj) {
     return `<li class="card">
-                <a href="${obj.largeImageURL}">
+                <a href="${picObj.largeImageURL}">
                 <div class="img-wrapper">
-                <img src="${obj.webformatURL}" alt="${obj.tags}">
+                <img src="${picObj.webformatURL}" alt="${picObj.tags}">
                 </div>
                 </a>
             <table>
@@ -23,10 +18,10 @@ export function render(picsArr) {
                     <th>Downloads</th>
                 </tr>
                 <tr>
-                    <td>"${obj.likes}"</td>
-                    <td>"${obj.views}"</td>
-                    <td>"${obj.comments}"</td>
-                    <td>"${obj.downloads}"</td>
+                    <td>"${picObj.likes}"</td>
+                    <td>"${picObj.views}"</td>
+                    <td>"${picObj.comments}"</td>
+                    <td>"${picObj.downloads}"</td>
                 </tr>
             </table>
         </li>`;

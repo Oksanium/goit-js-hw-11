@@ -13,8 +13,8 @@ import errIcon from './img/cross-icon.svg';
 import closeIcon from './img/cross.svg';
 
 const modalOptions = {
-    captionsData: 'alt',
-    captionDelay: 250,
+  captionsData: 'alt',
+  captionDelay: 250,
 };
 const lightbox = new SimpleLightbox('.gallery a', modalOptions);
 
@@ -26,15 +26,23 @@ form.addEventListener('submit', onSubmit);
 function onSubmit(evt) {
   evt.preventDefault();
   gallery.innerHTML = '';
-  
+
   const userQuery = form.querySelector('input').value;
   if (userQuery === '') return;
   loader.setAttribute('style', 'display: flex;');
   getPhotos(userQuery)
-        .then( res => res.json() )
-        .then( data => { gallery.innerHTML = render(data.hits); lightbox.refresh(); } )
-        .catch( e =>  showRedToast() )
-        .finally( () => { loader.setAttribute('style', 'display: none;'); } );
+    .then(res => res.json())
+    .then(data => {
+      if (data.hits.length === 0) {
+        throw new Error('no data');
+      }
+      gallery.innerHTML = render(data.hits);
+      lightbox.refresh();
+    })
+    .catch(e => showRedToast())
+    .finally(() => {
+      loader.setAttribute('style', 'display: none;');
+    });
 }
 
 function showRedToast() {
@@ -62,8 +70,6 @@ function showRedToast() {
     close: false,
   });
 }
-
-
 
 // toast test
 
